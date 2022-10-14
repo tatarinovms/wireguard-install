@@ -98,10 +98,14 @@ new_client_dns () {
 	echo "   2) Google"
 	echo "   3) 1.1.1.1"
 	echo "   4) OpenDNS"
-	echo "   5) Quad9"
-	echo "   6) AdGuard"
+	echo "   5) AdGuard"
+	echo "   6) Quad9"
+	echo "   7) Yandex Basic"
+	echo "   8) Yandex Safe"
+	echo "   9) Yandex Childrens"
+
 	read -p "DNS server [1]: " dns
-	until [[ -z "$dns" || "$dns" =~ ^[1-6]$ ]]; do
+	until [[ -z "$dns" || "$dns" =~ ^[1-9]$ ]]; do
 		echo "$dns: invalid selection."
 		read -p "DNS server [1]: " dns
 	done
@@ -128,10 +132,19 @@ new_client_dns () {
 			dns="208.67.222.222, 208.67.220.220"
 		;;
 		5)
-			dns="9.9.9.9, 149.112.112.112"
+			dns="94.140.14.14, 94.140.15.15"
 		;;
 		6)
-			dns="94.140.14.14, 94.140.15.15"
+			dns="9.9.9.9, 149.112.112.112"
+		;;
+		7)
+			dns="77.88.8.8 , 77.88.8.1"
+		;;
+		8)
+			dns="77.88.8.88, 77.88.8.2"
+		;;
+		9)
+			dns="77.88.8.7, 77.88.8.3 "
 		;;
 	esac
 }
@@ -548,7 +561,11 @@ else
 			qrencode -t UTF8 < ~/"$client.conf"
 			echo -e '\xE2\x86\x91 That is a QR code containing your client configuration.'
 			echo
-			echo "$client added. Configuration available in:" ~/"$client.conf"
+			echo User "$client added. Configuration available in:" ~/"$client.conf"
+			echo WireGuard configuration file in text format:
+			echo ----
+			cat ~/"$client.conf"
+			echo ----
 			exit
 		;;
 		2)
